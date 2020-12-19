@@ -26,7 +26,7 @@ public class StartHere {
 					addChild(part[1], part[2], part[3]);
 				} else if ("GET_RELATIONSHIP".equals(part[0])) {
 					getRelationship(part[1], part[2]);
-				} 
+				}
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -88,25 +88,26 @@ public class StartHere {
 	}
 
 	private static void daugther(String name) {
-		List<String> s = familyList.stream().filter(p -> name.equals(p.getParent()) && !p.isMale()).map(e -> e.getName()).collect(Collectors.toList());
+		List<String> s = familyList.stream().filter(p -> name.equals(p.getParent()) && !p.isMale())
+				.map(e -> e.getName()).collect(Collectors.toList());
 		print(s);
 	}
 
 	private static void print(List<String> s) {
-		if(s.isEmpty()) {
+		if (s.isEmpty()) {
 			System.out.println("NONE");
-		}
-		else {
+		} else {
 			s.forEach(p -> {
 				System.out.print(p + " ");
 			});
-		System.out.println();
+			System.out.println();
 		}
 	}
 
 	private static void son(String name) {
-		List<String> s = familyList.stream().filter(p -> name.equals(p.getParent()) && p.isMale()).map(e -> e.getName()).collect(Collectors.toList());
-				print(s);
+		List<String> s = familyList.stream().filter(p -> name.equals(p.getParent()) && p.isMale()).map(e -> e.getName())
+				.collect(Collectors.toList());
+		print(s);
 	}
 
 	private static void maternalPaternal(Optional<Person> thisPerson, boolean male, boolean maternal) {
@@ -135,13 +136,13 @@ public class StartHere {
 							.filter(p -> grandMother.equals(p.getParent()) && p.isMale()
 									&& !p.getPartner().equals(thisPerson.get().getParent()))
 							.map(e -> e.getName()).collect(Collectors.toList());
-							print(s);}
-				else {
+					print(s);
+				} else {
 					List<String> s = familyList.stream()
 							.filter(p -> grandMother.equals(p.getParent()) && !p.isMale()
 									&& !p.getName().equals(thisPerson.get().getParent()))
 							.map(e -> e.getName()).collect(Collectors.toList());
-							print(s);
+					print(s);
 				}
 			}
 		}
@@ -152,31 +153,38 @@ public class StartHere {
 			Optional<Person> partner = familyList.stream()
 					.filter(p -> thisPerson.get().getPartner().equals(p.getName())).findFirst();
 			if (partner.isPresent()) {
-				List<String> s = familyList.stream().filter(p -> partner.get().getParent().equals(p.getParent()) && p.isMale()
-						&& !partner.get().getName().equals(p.getName())).map(e -> e.getName()).collect(Collectors.toList());
+				List<String> s = familyList.stream()
+						.filter(p -> partner.get().getParent().equals(p.getParent()) && p.isMale()
+								&& !partner.get().getName().equals(p.getName()))
+						.map(e -> e.getName()).collect(Collectors.toList());
 				print(s);
 			} else
 				System.out.println("NONE");
 		} else {
-			List<String> s = familyList.stream().filter(p -> thisPerson.get().getParent().equals(p.getParent()) && !p.isMale()
-					&& "NA".equals(thisPerson.get().getPartner())).map(e -> e.getPartner()).collect(Collectors.toList());
+			List<String> s = familyList.stream()
+					.filter(p -> thisPerson.get().getParent().equals(p.getParent()) && !p.isMale()
+							&& "NA".equals(thisPerson.get().getPartner()))
+					.map(e -> e.getPartner()).collect(Collectors.toList());
 			print(s);
 		}
 	}
 
 	private static void sisterInLaw(Optional<Person> thisPerson) {
 		if ("NA".equals(thisPerson.get().getParent())) {
-			Optional<Person> partner = familyList.stream().filter(p -> thisPerson.get().getPartner().equals(p.getName())
-					).findFirst();
+			Optional<Person> partner = familyList.stream()
+					.filter(p -> thisPerson.get().getPartner().equals(p.getName())).findFirst();
 			if (partner.isPresent()) {
-				List<String> s =familyList.stream().filter(p -> partner.get().getParent().equals(p.getParent()) && !p.isMale()
-					).map(e -> e.getName()).collect(Collectors.toList());
+				List<String> s = familyList.stream()
+						.filter(p -> partner.get().getParent().equals(p.getParent()) && !p.isMale())
+						.map(e -> e.getName()).collect(Collectors.toList());
 				print(s);
 			} else
 				System.out.println("NONE");
 		} else {
-			List<String> s = familyList.stream().filter(p -> thisPerson.get().getParent().equals(p.getParent()) && p.isMale()
-					&& "NA".equals(thisPerson.get().getPartner())).map(e -> e.getPartner()).collect(Collectors.toList());
+			List<String> s = familyList.stream()
+					.filter(p -> thisPerson.get().getParent().equals(p.getParent()) && p.isMale()
+							&& "NA".equals(thisPerson.get().getPartner()))
+					.map(e -> e.getPartner()).collect(Collectors.toList());
 			print(s);
 		}
 	}
